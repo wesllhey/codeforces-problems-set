@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Codeforces - Problems Set</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-table.min.css') }}">
+
+    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap-table.min.js') }}"></script>
+
+    <style>
+      html {
+        font-size: 0.9rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <br/>
+      <h2>CodeForces Problems Set</h2>
+      <br/>
+      
+      <form method="POST" action="/">
+        {% for t in tags_count %}  
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" name="tags" id="tag-{{t.name}}" value="{{t.name}}">
+            <label class="form-check-label" for="tag-{{t.name}}">{{t.name}} <span class="badge text-bg-secondary">{{t.count}}</span> </label>
+          </div>
+        {% endfor %}
+        
+        <br/><br/>
+        <div class="row g-3">
+          <div class="col-md-2">
+            <label for="rating-start" class="form-label">Rating Start</label>
+            <input type="number" class="form-control" name="rating_start" id="rating-start">
+          </div>
+          <div class="col-md-2">
+            <label for="rating-end" class="form-label">Rating End</label>
+            <input type="number" class="form-control" name="rating_end" id="rating-end">
+          </div>
+          
+          <div class="col-md-2">
+            <label for="rating-end" class="form-label">&zwnj;</label>
+            <button type="submit" class="form-control btn btn-primary">Filter</button>
+          </div>
+        </div>
+
+      </form>
+
+      <br/><br/>
+
+      <table id="table"
+      data-pagination="true"
+      data-use-row-attr-func="true"
+      data-reorderable-rows="true">
+        <thead>
+            <tr>
+                <th data-field="name" data-sortable="true">Name</th>
+                <th data-field="rating" data-sortable="true">Rating</th>
+                <th data-field="user-count" data-sortable="true">User Count</th>
+                <th data-field="tags">Tags</th>
+                <th data-field="link" >Link</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for problem in problems %}
+            <tr>
+                <td>{{problem.name}}</td>
+                <td>{{problem.rating}}</td>
+                <td>{{problem.users_count}}</td>
+                <td>{{", ".join(problem.tags)}}</td>
+                <td><a target="_blank" href="{{problem.link}}">{{problem.link}}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      $(function() {
+        $('#table').bootstrapTable()
+      })
+    </script>
+  </body>
+</html>
