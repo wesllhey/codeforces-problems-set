@@ -27,7 +27,7 @@ On the `csv/csv_generator.py` file, has a constant called `MIN_RATING` by defaul
 # ui
 The ui is very simple, just a table with the problems, by default, sorted by rating (ask) and the number of users which solve the problem (desc).
 
-![alt text](https://github.com/wesllhey/codeforces-problems-set/blob/main/ui.jpg?raw=true)
+![alt text](./blob/ui.png?raw=true)
 
 # filters
 - Tags, e.g.: dsu, trees, dp, graph, math
