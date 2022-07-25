@@ -58,6 +58,7 @@ def index():
     if request.method == 'POST':
         rating_start = request.form['rating_start']
         rating_end = request.form['rating_end']
+        min_users_count = int(request.form['min_users_count']) if request.form['min_users_count'] else 0 
         tags = set(request.form.getlist('tags'))
 
         has_rating_filter = False
@@ -65,14 +66,14 @@ def index():
         if rating_start and rating_end:
             rating_start = int(rating_start)
             rating_end = int(rating_end)
-            has_rating_filter = True
-
-        if not has_rating_filter and not tags:
-            return render_template('index.html', problems=all_problems, tags_count=all_tags)    
+            has_rating_filter = True 
 
         filtered_problems = []
 
         for p in all_problems:
+            if p.users_count < min_users_count:
+                continue
+
             if has_rating_filter:
                 if p.rating < rating_start or p.rating > rating_end:
                     continue
